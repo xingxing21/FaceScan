@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FaceScan</string>
+    <string name="take_face">Take Face</string>
 </resources>

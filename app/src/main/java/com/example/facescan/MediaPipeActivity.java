@@ -1,13 +1,10 @@
 package com.example.facescan;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -17,26 +14,20 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.google.common.util.concurrent.ListenableFuture;
+import com.example.facescan.MediaPipe.FaceDetectionResultGlRenderer;
 import com.google.mediapipe.formats.proto.LocationDataProto;
 import com.google.mediapipe.solutioncore.CameraInput;
 import com.google.mediapipe.solutioncore.SolutionGlSurfaceView;
-import com.google.mediapipe.solutioncore.VideoInput;
 import com.google.mediapipe.solutions.facedetection.FaceDetection;
 import com.google.mediapipe.solutions.facedetection.FaceDetectionOptions;
 import com.google.mediapipe.solutions.facedetection.FaceDetectionResult;
 import com.google.mediapipe.solutions.facedetection.FaceKeypoint;
 
-import java.io.IOError;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
 
-public class MainActivity extends AppCompatActivity {
+public class MediaPipeActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     private FaceDetection _faceDetection;
@@ -87,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_mediapipe);
 
         _btnTakeFace = findViewById(R.id.btnTakeFace);
 
@@ -228,11 +219,11 @@ public class MainActivity extends AppCompatActivity {
         if (result.multiFaceDetections().isEmpty()) {
             return;
         }
-
         LocationDataProto.LocationData.RelativeKeypoint noseTip = result.multiFaceDetections().get(faceIndex).getLocationData().getRelativeKeypoints(FaceKeypoint.NOSE_TIP);
         if (showPixelValues) {
             int width = result.inputBitmap().getWidth();
             int height = result.inputBitmap().getHeight();
+
             Log.i(TAG, String.format("MediaPipe Face Detection nose tip coordinates (pixel value): x=%f, y=%f",
                     noseTip.getX() * width, noseTip.getY() * height));
         } else {

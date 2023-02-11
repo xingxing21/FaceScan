@@ -1,4 +1,4 @@
-package com.example.facescan;
+package com.example.facescan.MediaPipe;
 
 import static java.lang.Math.min;
 
